@@ -1,38 +1,43 @@
 plugins {
-    // id for library
-    // id for maven to publish jar to local repository
+    id 'java' // Apply the Java plugin for Java projects
+    id 'maven-publish' // Apply the Maven Publish plugin for publishing artifacts
 }
 
 java {
-// provide sourceCompatibility
+    sourceCompatibility = JavaVersion.VERSION_1_8 // Set the Java source compatibility level
 }
 
 repositories {
-// provide repository, where required dependencies are located
+    mavenCentral() // Add Maven Central repository for fetching dependencies
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.10' // Add Apache Commons Lang 3.10 or higher dependency
+    // Other dependencies can be added here
 }
 
 publishing {
     publications {
-        maven(MavenPublication) {
-// provide groupId
-// provide artifactId
-// provide version
+        mavenJava(MavenPublication) { // Define a publication named "mavenJava"
+            from components.java // Publish the Java component
 
-            from components.java
+            groupId = 'com.example' // Set your desired groupId
+            artifactId = 'your-artifact-name' // Set your desired artifactId
+            version = '1.0.0' // Set your desired version
+
+            // Optionally, you can add more publication details here, such as licenses, developers, etc.
         }
     }
-}
 
-//add Apache Apache Commons Lang 3.10 (or higher) dependency
+    repositories {
+        mavenLocal() // Publish to the local Maven repository
+        // You can also configure other repositories for publishing, such as Maven Central, Artifactory, etc.
+    }
+}
 
 jar {
     manifest {
-        //provide manifest with such attributes as 'Implementation-Title', 'Implementation-Version'
+        attributes 'Implementation-Title': 'Your Project Name',
+                'Implementation-Version': '1.0.0' // Set your project name and version
     }
 }
-
-test {
-    useJUnitPlatform()
-}
-
-publishMavenPublicationToMavenLocal {}.mustRunAfter('build')

@@ -1,7 +1,17 @@
-//add everything here
-
-test {
-    useJUnitPlatform()
+plugins {
+    id 'java' // Apply the Java plugin for Java projects
 }
 
-compileJava {}.dependsOn(':utils:publishToMavenLocal')
+repositories {
+    mavenCentral() // Add Maven Central repository for fetching dependencies
+    // You can also add other repositories if needed
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1' // Add JUnit Jupiter dependency for testing
+    // Other dependencies can be added here
+}
+
+test {
+    useJUnitPlatform() // Use JUnit Platform for running tests
+}
